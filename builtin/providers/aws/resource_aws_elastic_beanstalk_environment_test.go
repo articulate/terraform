@@ -23,7 +23,7 @@ func TestAccAWSBeanstalkEnv_basic(t *testing.T) {
 			resource.TestStep{
 				Config: testAccBeanstalkEnvConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckBeanstalkEnvExists("aws_elastic_beanstalk_environment.tfenvtest", &app),
+					testAccCheckBeanstalkEnvExists("awseb_elastic_beanstalk_environment.tfenvtest", &app),
 				),
 			},
 		},
@@ -34,7 +34,7 @@ func testAccCheckBeanstalkEnvDestroy(s *terraform.State) error {
 	conn := testAccProvider.Meta().(*AWSClient).elasticbeanstalkconn
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "aws_elastic_beanstalk_environment" {
+		if rs.Type != "awseb_elastic_beanstalk_environment" {
 			continue
 		}
 
@@ -103,14 +103,14 @@ func testAccCheckBeanstalkEnvExists(n string, app *elasticbeanstalk.EnvironmentD
 }
 
 const testAccBeanstalkEnvConfig = `
-resource "aws_elastic_beanstalk_application" "tftest" {
+resource "awseb_elastic_beanstalk_application" "tftest" {
   name = "tf-test-name"
   description = "tf-test-desc"
 }
 
-resource "aws_elastic_beanstalk_environment" "tfenvtest" {
+resource "awseb_elastic_beanstalk_environment" "tfenvtest" {
   name = "tf-test-name"
-  application = "${aws_elastic_beanstalk_application.tftest.name}"
+  application = "${awseb_elastic_beanstalk_application.tftest.name}"
   solution_stack_name = "64bit Amazon Linux 2015.09 v2.0.4 running Go 1.4"
   #solution_stack_name =
 }

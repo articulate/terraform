@@ -22,7 +22,7 @@ func TestAccAWSBeanstalkApp_basic(t *testing.T) {
 			resource.TestStep{
 				Config: testAccBeanstalkAppConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckBeanstalkAppExists("aws_elastic_beanstalk_application.tftest", &app),
+					testAccCheckBeanstalkAppExists("awseb_elastic_beanstalk_application.tftest", &app),
 				),
 			},
 		},
@@ -33,7 +33,7 @@ func testAccCheckBeanstalkAppDestroy(s *terraform.State) error {
 	conn := testAccProvider.Meta().(*AWSClient).elasticbeanstalkconn
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "aws_elastic_beanstalk_application" {
+		if rs.Type != "awseb_elastic_beanstalk_application" {
 			continue
 		}
 
@@ -93,7 +93,7 @@ func testAccCheckBeanstalkAppExists(n string, app *elasticbeanstalk.ApplicationD
 }
 
 const testAccBeanstalkAppConfig = `
-resource "aws_elastic_beanstalk_application" "tftest" {
+resource "awseb_elastic_beanstalk_application" "tftest" {
   name = "tf-test-name"
   description = "tf-test-desc"
 }

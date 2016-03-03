@@ -22,7 +22,7 @@ func TestAccAWSBeanstalkConfigurationTemplate_basic(t *testing.T) {
 			resource.TestStep{
 				Config: testAccBeanstalkConfigurationTemplateConfig,
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckBeanstalkConfigurationTemplateExists("aws_elastic_beanstalk_configuration_template.tf_template", &config),
+					testAccCheckBeanstalkConfigurationTemplateExists("awseb_elastic_beanstalk_configuration_template.tf_template", &config),
 				),
 			},
 		},
@@ -33,7 +33,7 @@ func testAccCheckBeanstalkConfigurationTemplateDestroy(s *terraform.State) error
 	conn := testAccProvider.Meta().(*AWSClient).elasticbeanstalkconn
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "aws_elastic_beanstalk_configuration_template" {
+		if rs.Type != "awseb_elastic_beanstalk_configuration_template" {
 			continue
 		}
 
@@ -102,20 +102,20 @@ func testAccCheckBeanstalkConfigurationTemplateExists(n string, config *elasticb
 }
 
 const testAccBeanstalkConfigurationTemplateConfig = `
-resource "aws_elastic_beanstalk_application" "tftest" {
+resource "awseb_elastic_beanstalk_application" "tftest" {
   name = "tf-test-name"
   description = "tf-test-desc"
 }
 
-#resource "aws_elastic_beanstalk_environment" "tfenvtest" {
+#resource "awseb_elastic_beanstalk_environment" "tfenvtest" {
 #  name = "tf-test-name"
-#  application = "${aws_elastic_beanstalk_application.tftest.name}"
+#  application = "${awseb_elastic_beanstalk_application.tftest.name}"
 #  solution_stack_name = "64bit Amazon Linux 2015.03 v2.0.3 running Go 1.4"
 #}
 
-resource "aws_elastic_beanstalk_configuration_template" "tf_template" {
+resource "awseb_elastic_beanstalk_configuration_template" "tf_template" {
   name = "tf-test-template-config"
-  application = "${aws_elastic_beanstalk_application.tftest.name}"
+  application = "${awseb_elastic_beanstalk_application.tftest.name}"
   solution_stack_name = "64bit Amazon Linux 2015.09 v2.0.4 running Go 1.4"
 }
 `
